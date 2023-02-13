@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/_Scenes/Menu.unity
     guid: 36c7c99df180a8e428b4326cfb5ae483
   - enabled: 1
-    path: Assets/Scenes/Just House.unity
+    path: Assets/_Scenes/Just House.unity
     guid: e7b13b8eb8402bf438f02d95a1ced08d
   - enabled: 1
-    path: Assets/Scenes/Credits.unity
+    path: Assets/_Scenes/Credits.unity
     guid: 43440aeb0d46e564c94f92463034d57f
   m_configObjects: {}

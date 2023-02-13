@@ -14,6 +14,11 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
 
+    private void Start()
+    {
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
