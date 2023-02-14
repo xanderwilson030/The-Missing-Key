@@ -4,45 +4,57 @@ using UnityEngine;
 
 public class NewPlayerMovement : MonoBehaviour
 {
-    // Private
-    Rigidbody rb;
-
     // Public
-    [SerializeField] float accelerationSpeed;
-    [SerializeField] float baseSpeed;
-    [SerializeField] float dragForce;
+    [SerializeField] Camera _camera;
+    [SerializeField] float speed = 2f;
+    [SerializeField] float sensitivity = 2f;
 
-    // Start is called before the first frame update
+    // Private
+    private float moveFB;
+    private float moveLR;
+    private float rotX;
+    private float rotY;
+    private float verticalVelocity = -9.8f;
+    private CharacterController characterController;
+
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
+        // Locking the cursor to the screen
+        Cursor.lockState = CursorLockMode.Locked;
+
+        // Obtaining important components from the player
+        characterController = gameObject.GetComponent<CharacterController>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
-
+        // Move is called every frame, notice that it is not a fixed update
+        Move();
     }
 
-    private void FixedUpdate()
+    private void Move()
     {
-        Vector3 down = transform.TransformDirection(Vector3.down);
+        // Grabbing vertical, hortizontal,and mouse movements
+        moveFB = Input.GetAxis("Vertical") * speed;
+        moveLR = Input.GetAxis("Horizontal") * speed;
+        rotX = Input.GetAxis("Mouse X") * sensitivity;
+        rotY -= Input.GetAxis("Mouse Y") * sensitivity;
 
-        if (Physics.Raycast(transform.position, down, 10))
-        {
-            Debug.Log("Ground Detected");
-            rb.position = new Vector3(rb.gameObject.transform.position.x, , rb.gameObject.transform.position.z);
-        }
+        // Clamping the y movement to lock how high and low the player can look
+        rotY = Mathf.Clamp(rotY, -60f, 60f);
+
+        // Creating the movement vector
+        Vector3 movement = new Vector3(moveLR, verticalVelocity, moveFB);
+
+        // Rotating the player camera
+        transform.Rotate(0, rotX, 0);
+        _camera.transform.localRotation = Quaternion.Euler(rotY, 0, 0);
+
+        // Moving the player
+        movement = transform.rotation * movement;
+        characterController.Move(movement * Time.deltaTime);
     }
 
-    private void PlayerMovement()
-    {
-        float xMovement = Input.GetAxisRaw("Horizontal");
-        float zMovement = Input.GetAxisRaw("Vertical");
-
-        Vector3 movementVector = new Vector3(xMovement, rb.velocity.y, zMovement) * baseSpeed * accelerationSpeed * Time.deltaTime;
-
-        rb.velocity = movementVector;
-    }
 }
