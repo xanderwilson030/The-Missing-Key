@@ -9,6 +9,7 @@ TagManager:
   - DoorInteract
   - pkey
   - equippable
+  - Resting Place
   layers:
   - Default
   - TransparentFX

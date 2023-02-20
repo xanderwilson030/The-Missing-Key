@@ -6,7 +6,6 @@ public class PickUpItem : MonoBehaviour
 {
     [SerializeField] GameObject holdPos;
     public GameObject objectHeld;
-    
 
     public Camera raySource;
 
@@ -29,37 +28,22 @@ public class PickUpItem : MonoBehaviour
             //RaycastHit hitData;
             RaycastHit hit;
 
-            // Creating the raycast to check what the player is shooting
             if (Physics.Raycast(raySource.transform.position, raySource.transform.forward, out hit, range))
             {
-                // The Ray hit something less than 10 Units away,
-                // It was on the a certain Layer
-                // But it wasn't a Trigger Collider
 
                 Debug.DrawRay(raySource.transform.position, raySource.transform.TransformDirection(Vector3.forward) * hit.distance, Color.red, range);
                 Debug.Log("Did Hit" + hit.transform.gameObject.tag);
 
                 GameObject newGameObject = hit.transform.gameObject;
 
-                CheckObject(newGameObject);
+                CheckObject(newGameObject, hit);
             }
 
-
-            //RaycastHit hit;
-            //if (Physics.Raycast(raySource.transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, 8))
-            //{
-                
-
-            //}
-            //else
-            //{
-            //    Debug.Log("No Hit");
-            //}
         }
     }
 
 
-    private void CheckObject(GameObject target)
+    private void CheckObject(GameObject target, RaycastHit hit)
     {
         Debug.Log("Checking object");
         if (target.tag.Equals("equippable"))
@@ -67,6 +51,19 @@ public class PickUpItem : MonoBehaviour
             Debug.Log("SUCCESS");
             target.transform.parent = holdPos.transform;
             target.transform.position = holdPos.transform.position;
+        }
+
+        if (target.tag.Equals("Resting Place"))
+        {
+            Debug.Log("Placing Object " + hit.transform.gameObject.name);
+
+            GameObject holdingSpot = gameObject.transform.GetChild(2).gameObject;
+            GameObject childOfHolding = holdingSpot.transform.GetChild(0).gameObject;
+
+            GameObject child = hit.transform.GetChild(0).gameObject;
+
+            childOfHolding.transform.parent = child.transform;
+            childOfHolding.transform.position = child.transform.position;
         }
     }
 
