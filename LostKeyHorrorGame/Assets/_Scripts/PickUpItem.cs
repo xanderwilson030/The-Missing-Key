@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PickUpItem : MonoBehaviour
 {
-    [SerializeField] Transform holdPos;
+    [SerializeField] GameObject holdPos;
     public GameObject objectHeld;
+    
 
     public Camera raySource;
+
+    int range = 100;
 
 
 
@@ -22,18 +25,21 @@ public class PickUpItem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = new Ray(raySource.transform.position, raySource.transform.forward);
-            RaycastHit hitData;
-            if (Physics.Raycast(ray, out hitData, 1000000, 8))
+            //Ray ray = new Ray(raySource.transform.position, raySource.transform.forward);
+            //RaycastHit hitData;
+            RaycastHit hit;
+
+            // Creating the raycast to check what the player is shooting
+            if (Physics.Raycast(raySource.transform.position, raySource.transform.forward, out hit, range))
             {
                 // The Ray hit something less than 10 Units away,
                 // It was on the a certain Layer
                 // But it wasn't a Trigger Collider
 
-                Debug.DrawRay(raySource.transform.position, raySource.transform.TransformDirection(Vector3.forward) * hitData.distance, Color.red, 10000000000000000000);
-                Debug.Log("Did Hit");
+                Debug.DrawRay(raySource.transform.position, raySource.transform.TransformDirection(Vector3.forward) * hit.distance, Color.red, range);
+                Debug.Log("Did Hit" + hit.transform.gameObject.tag);
 
-                GameObject newGameObject = hitData.transform.gameObject;
+                GameObject newGameObject = hit.transform.gameObject;
 
                 CheckObject(newGameObject);
             }
@@ -59,6 +65,7 @@ public class PickUpItem : MonoBehaviour
         if (target.tag.Equals("equippable"))
         {
             Debug.Log("SUCCESS");
+            target.transform.parent = holdPos.transform;
             target.transform.position = holdPos.transform.position;
         }
     }
