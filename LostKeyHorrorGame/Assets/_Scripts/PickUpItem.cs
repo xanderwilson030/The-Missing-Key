@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class PickUpItem : MonoBehaviour
 {
@@ -64,6 +66,16 @@ public class PickUpItem : MonoBehaviour
 
             childOfHolding.transform.parent = child.transform;
             childOfHolding.transform.position = child.transform.position;
+            
+            if (childOfHolding.gameObject.name.Equals("Vase"))
+            {
+                GameEvents.current.e_ObjectPlaced.Invoke(0);
+            }
+
+            if (childOfHolding.gameObject.name.Equals("Plank"))
+            {
+                GameEvents.current.e_ObjectPlaced.Invoke(1);
+            }
         }
     }
 
