@@ -18,6 +18,8 @@ public class GameEvents : MonoBehaviour
 
     public MyIntEvent e_ObjectPlaced;
 
+    public UnityEvent e_MonsterAttack;
+
 
     private void Awake()
     {
@@ -29,6 +31,11 @@ public class GameEvents : MonoBehaviour
         if (e_ObjectPlaced == null)
         {
             e_ObjectPlaced = new MyIntEvent();
+        }
+
+        if (e_MonsterAttack == null)
+        {
+            e_MonsterAttack = new UnityEvent();
         }
     }
 

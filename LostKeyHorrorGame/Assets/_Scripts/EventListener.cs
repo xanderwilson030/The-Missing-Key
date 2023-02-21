@@ -29,6 +29,6 @@ public class EventListener : MonoBehaviour
         else if (i == 1)
         {
             Debug.Log("Place Board Event");
-        }
+        } 
     }
 }

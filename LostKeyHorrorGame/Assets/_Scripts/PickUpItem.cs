@@ -55,6 +55,7 @@ public class PickUpItem : MonoBehaviour
             target.transform.position = holdPos.transform.position;
         }
 
+
         if (target.tag.Equals("Resting Place"))
         {
             Debug.Log("Placing Object " + hit.transform.gameObject.name);
@@ -72,7 +73,7 @@ public class PickUpItem : MonoBehaviour
                 GameEvents.current.e_ObjectPlaced.Invoke(0);
             }
 
-            if (childOfHolding.gameObject.name.Equals("Plank"))
+            if (childOfHolding.gameObject.name.Equals("Cabinet"))
             {
                 GameEvents.current.e_ObjectPlaced.Invoke(1);
             }

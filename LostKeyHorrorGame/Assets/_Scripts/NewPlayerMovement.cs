@@ -8,6 +8,7 @@ public class NewPlayerMovement : MonoBehaviour
     [SerializeField] Camera _camera;
     [SerializeField] float speed = 2f;
     [SerializeField] float sensitivity = 2f;
+    public bool hasKey = false;
 
     // Private
     private float moveFB;
